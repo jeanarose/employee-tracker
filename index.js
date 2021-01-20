@@ -18,7 +18,6 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
-  console.log(`connected as id: ${connection.threadId}`);
   init();
 });
 
@@ -29,14 +28,35 @@ const init = () => {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["View all employees"],
+        choices: ["View all employees", "Exit"],
       },
     ])
-    .then(({ action }) => {
-      console.log(action);
+    .then((data) => {
+      switch (data.action) {
+        case "View all employees":
+          viewEmployees();
+          break;
+        case "Exit":
+          exit();
+          break;
+      }
     });
 };
 
+const viewEmployees = () => {
+  connection.query(`SELECT * FROM employee;`, (err, data) => {
+    if (err) throw err;
+    console.log(data);
+    const arrayOfEmployees = data.map((employee) => {
+      return {
+        name: employee.first_name + " " + employee.lastName,
+        value: employee.id,
+      };
+    });
+    init();
+  });
+};
+
 const exit = () => {
-    connection.end();
-  }
+  connection.end();
+};
