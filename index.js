@@ -57,9 +57,9 @@ const viewEmployees = () => {
 // View all employees by department
 const viewEmployeesByDepartment = () => {
   connection.query(
-    `SELECT title, salary, department_id
-        FROM role
-        LEFT JOIN employee ON employee.role_id = role.id;`,
+    `SELECT first_name, last_name, name AS department
+    FROM employee, department, role
+    WHERE employee.role_id = role.id AND role.department_id = department.id`,
     (err, data) => {
       if (err) throw err;
       console.table(data);
