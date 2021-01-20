@@ -37,6 +37,6 @@ const init = () => {
     });
 };
 
-function exit() {
+const exit = () => {
     connection.end();
   }
