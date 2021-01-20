@@ -46,7 +46,7 @@ const init = () => {
 const viewEmployees = () => {
   connection.query(`SELECT * FROM employee;`, (err, data) => {
     if (err) throw err;
-    console.log(data);
+    console.table(data);
     const arrayOfEmployees = data.map((employee) => {
       return {
         name: employee.first_name + " " + employee.lastName,
@@ -60,3 +60,11 @@ const viewEmployees = () => {
 const exit = () => {
   connection.end();
 };
+
+// View all employees by department
+// View employees by manager
+// Add employee
+// Remove employee
+// Update employee role
+// Update employee manager
+// View all roles 
