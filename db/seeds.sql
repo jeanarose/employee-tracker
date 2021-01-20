@@ -63,3 +63,7 @@ SELECT * FROM employee;
 SELECT * FROM role;
 
 SELECT * FROM department;
+
+SELECT title, salary, department_id
+FROM role
+LEFT JOIN employee ON employee.role_id = role.id;
