@@ -27,7 +27,9 @@ The following people contributed to the success of this application. You can vie
 * [Peter Colella](https://github.com/petercolella)
 
 The following resources were used to find code to make Employee Tracker function properly:
-
+* [w3schools:](https://www.w3schools.com/sql/sql_foreignkey.asp) SQL FOREIGN KEY Constraint
+* [MySQL Tutorial:](https://www.mysqltutorial.org/mysql-foreign-key/) Introduction to MySQL foreign key
+* [Site Point:](https://www.sitepoint.com/mysql-foreign-keys-quicker-database-development/) How to Use MySQL Foreign Keys for Quicker Database Development
 ## License
 Copyright (c) 2021 Jeana Rose Mathis
 
