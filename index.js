@@ -28,13 +28,16 @@ const init = () => {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["View all employees", "Exit"],
+        choices: ["View all employees", "View employees by department", "Exit"],
       },
     ])
     .then((data) => {
       switch (data.action) {
         case "View all employees":
           viewEmployees();
+          break;
+        case "View employees by department":
+          viewEmployeesByDepartment();
           break;
         case "Exit":
           exit();
@@ -51,12 +54,19 @@ const viewEmployees = () => {
   });
 };
 
-
-
 // View all employees by department
 const viewEmployeesByDepartment = () => {
-    connection.query()
-}
+  connection.query(
+    `SELECT title, salary, department_id
+        FROM role
+        LEFT JOIN employee ON employee.role_id = role.id;`,
+    (err, data) => {
+      if (err) throw err;
+      console.table(data);
+      init();
+    }
+  );
+};
 
 // View employees by manager
 // Add employee
@@ -66,5 +76,5 @@ const viewEmployeesByDepartment = () => {
 // View all roles
 
 const exit = () => {
-    connection.end();
-  };
+  connection.end();
+};

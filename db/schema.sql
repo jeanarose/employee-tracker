@@ -39,6 +39,6 @@ SELECT * FROM role;
 
 SELECT * FROM department;
 
-SELECT title, salary, department_id
-FROM role
-LEFT JOIN employee ON employee.role_id = role.id;
+SELECT first_name, last_name, name AS department, title, salary
+FROM employee, department, role
+WHERE employee.role_id = role.id AND role.department_id = department.id
