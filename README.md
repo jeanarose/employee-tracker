@@ -3,7 +3,7 @@
 ## Description
 
 ## Employee Tracker
-![Screenshot of Employee Tracker application.](public/assets/images/note-taker-screenshot.png)
+![Screenshot of Employee Tracker application.](public/assets/images/employee-tracker-screenshot.png)
 
 ## Table of Contents
 * [Installation](#installation)
@@ -13,7 +13,7 @@
 * [Tests](#tests)
 
 ## Installation
-1. Go to the [GitHub repository for Employee Tracker](https://github.com/jeanarose/note-taker).
+1. Go to the [GitHub repository for Employee Tracker](https://github.com/jeanarose/employee-tracker).
 2. Click the green **Code** button.
 3. Copy the SSH key.
 4. In your terminal, go into the directory that you want to host Employee Tracker. 
