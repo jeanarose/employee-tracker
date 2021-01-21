@@ -48,6 +48,9 @@ const init = () => {
         case "Add employee":
           addEmployee();
           break;
+        case "Add role":
+          addRole();
+          break;
         case "Exit":
           exit();
           break;
@@ -137,11 +140,43 @@ const addEmployee = () => {
 const addRole = () => {
   connection.query(`SELECT * FROM role;`, (err, data) => {
     if (err) throw err;
-    console.log(data);
   });
-  // connection.query(`INSERT INTO role (title, salary, department_id)
-  // VALUES
-  //   ("Software Engineer", 85000, 2);`);
+  connection.query(`SELECT * FROM department;`, (err, data) => {
+    if (err) throw err;
+    const arrayOfDepartments = data.map((department) => {
+      return { name: department.name, value: department.id };
+    });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the title of the role?",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the salary of the role?",
+      },
+      {
+        type: "list",
+        name: "department",
+        message: "What department is the role in?",
+        choices: arrayOfDepartments,
+      },
+    ])
+    .then(({ title, salary, department }) => {
+      connection.query(
+        `INSERT INTO role (title, salary, department_id)
+      VALUES (?, ?, ?);`,
+        [title, salary, department],
+        (err, data) => {
+          if (err) throw err;
+          init();
+        }
+      );
+    });
+  });
 };
 
 // Add roles
