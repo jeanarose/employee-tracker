@@ -42,10 +42,11 @@ VALUES
 
 -- View employees with roles and departments
 SELECT 
+	employee.id,
 	CONCAT(employee.first_name, " ", employee.last_name) AS employee,
-	CONCAT(manager.first_name, " ", manager.last_name) AS manager,
     title, name AS department, 
-    CONCAT("$", salary) AS salary
+    CONCAT("$", salary) AS salary,
+    CONCAT(manager.first_name, " ", manager.last_name) AS manager
 FROM employee
 INNER JOIN employee manager ON 
 	manager.id = employee.manager_id
