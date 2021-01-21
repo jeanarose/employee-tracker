@@ -81,58 +81,56 @@ const viewEmployees = () => {
 
 // Add employees
 const addEmployee = () => {
-  connection.query(
-    `SELECT * FROM employee;`,
-    (err, data) => {
+  connection.query(`SELECT * FROM employee;`, (err, data) => {
+    if (err) throw err;
+    const arrayOfManagers = data.map((employee) => {
+      return {
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
+      };
+    });
+    connection.query(`SELECT title FROM role;`, (err, data) => {
       if (err) throw err;
-      const arrayOfManagers = data.map((employee) => {
-        return {
-          name: `${employee.first_name} ${employee.last_name}`,
-          value: employee.id,
-        };
+      const arrayOfRoles = data.map((role) => {
+        return { name: role.title, value: role.id };
       });
-      connection.query(`SELECT title FROM role;`, (err, data) => {
-        if (err) throw err;
-        const arrayOfRoles = data.map((role) => {
-          return { name: role.title, value: role.id };
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "firstName",
+            message: "What is the employee's first name?",
+          },
+          {
+            type: "input",
+            name: "lastName",
+            message: "What is the employee's last name?",
+          },
+          {
+            type: "list",
+            name: "role",
+            message: "What is the employee's role?",
+            choices: arrayOfRoles,
+          },
+          {
+            type: "list",
+            name: "manager",
+            message: "Who is the employee's manager?",
+            choices: arrayOfManagers,
+          },
+        ])
+        .then(({ firstName, lastName, role, manager }) => {
+          connection.query(
+            `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`,
+            [firstName, lastName, role, manager],
+            (err, data) => {
+              if (err) throw err;
+              init();
+            }
+          );
         });
-        inquirer
-          .prompt([
-            {
-              type: "input",
-              name: "firstName",
-              message: "What is the employee's first name?",
-            },
-            {
-              type: "input",
-              name: "lastName",
-              message: "What is the employee's last name?",
-            },
-            {
-              type: "list",
-              name: "role",
-              message: "What is the employee's role?",
-              choices: arrayOfRoles,
-            },
-            {
-              type: "list",
-              name: "manager",
-              message: "Who is the employee's manager?",
-              choices: arrayOfManagers,
-            },
-          ])
-          .then(({firstName, lastName, role, manager}) => {
-            connection.query(
-              `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`, [firstName, lastName, role, manager],
-              (err, data) => {
-                if (err) throw err;
-                init();
-              }
-            );
-          });
-      });
-    }
-  );
+    });
+  });
 };
 
 // Add roles
@@ -147,7 +145,6 @@ const addEmployee = () => {
 const viewEmployeesByDepartment = () => {
   connection.query(`SELECT * FROM department;`, (err, data) => {
     if (err) throw err;
-    console.log(data);
     const arrayOfDepartments = data.map((department) => {
       return { name: department.name, value: department.id };
     });
@@ -168,7 +165,11 @@ const viewEmployeesByDepartment = () => {
           [department, department],
           (err, data) => {
             if (err) throw err;
-            console.table(data);
+            if (data.length === 0) {
+              console.log("There are no employees in this department.");
+            } else {
+              console.table(data);
+            }
             init();
           }
         );
