@@ -39,6 +39,6 @@ SELECT * FROM role;
 
 SELECT * FROM department;
 
-SELECT first_name, last_name, name AS department
+SELECT first_name, last_name, name AS department, title, salary
 FROM employee, department, role
-WHERE employee.role_id = role.id AND role.department_id = department.id
+WHERE employee.role_id = role.id AND role.department_id = 1 AND department.id = 1
