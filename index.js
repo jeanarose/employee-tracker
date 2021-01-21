@@ -46,6 +46,8 @@ const init = () => {
     });
 };
 
+// ================ REQUIRED ================
+
 const viewEmployees = () => {
   connection.query(
     `SELECT first_name, last_name,title, name AS department, manager_id, salary
@@ -61,6 +63,16 @@ const viewEmployees = () => {
     }
   );
 };
+
+// Add employees
+
+// Add roles
+
+// Add departments
+
+// Update employee roles
+
+// ================ BONUS ================
 
 // View all employees by department
 const viewEmployeesByDepartment = () => {
