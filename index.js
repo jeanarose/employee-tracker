@@ -31,7 +31,7 @@ const init = () => {
         choices: [
           "View all employees",
           "View employees by department",
-          "Add an employee",
+          "Add employee",
           "Exit",
         ],
       },
@@ -44,7 +44,7 @@ const init = () => {
         case "View employees by department":
           viewEmployeesByDepartment();
           break;
-        case "Add an employee":
+        case "Add employee":
           addEmployee();
           break;
         case "Exit":
@@ -58,12 +58,19 @@ const init = () => {
 
 const viewEmployees = () => {
   connection.query(
-    `SELECT first_name, last_name,title, name AS department, manager_id, salary
+    `SELECT 
+    employee.id,
+    CONCAT(employee.first_name, " ", employee.last_name) AS employee,
+      title, name AS department, 
+      CONCAT("$", salary) AS salary,
+      CONCAT(manager.first_name, " ", manager.last_name) AS manager
   FROM employee
-  INNER JOIN role
-      on employee.role_id = role.id 
+  INNER JOIN employee manager ON 
+    manager.id = employee.manager_id
+  INNER JOIN role ON 
+    employee.role_id = role.id
   INNER JOIN department
-      on role.department_id = department.id;`,
+    ON role.department_id = department.id;`,
     (err, data) => {
       if (err) throw err;
       console.table(data);
@@ -75,13 +82,55 @@ const viewEmployees = () => {
 // Add employees
 const addEmployee = () => {
   connection.query(
-    `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-    VALUES 
-        ("John", "Smith", 1, 2);`,
+    `SELECT * FROM employee;`,
     (err, data) => {
       if (err) throw err;
-      console.table(data);
-      init();
+      const arrayOfManagers = data.map((employee) => {
+        return {
+          name: `${employee.first_name} ${employee.last_name}`,
+          value: employee.id,
+        };
+      });
+      connection.query(`SELECT title FROM role;`, (err, data) => {
+        if (err) throw err;
+        const arrayOfRoles = data.map((role) => {
+          return { name: role.title, value: role.id };
+        });
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              name: "firstName",
+              message: "What is the employee's first name?",
+            },
+            {
+              type: "input",
+              name: "lastName",
+              message: "What is the employee's last name?",
+            },
+            {
+              type: "list",
+              name: "role",
+              message: "What is the employee's role?",
+              choices: arrayOfRoles,
+            },
+            {
+              type: "list",
+              name: "manager",
+              message: "Who is the employee's manager?",
+              choices: arrayOfManagers,
+            },
+          ])
+          .then(({firstName, lastName, role, manager}) => {
+            connection.query(
+              `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`, [firstName, lastName, role, manager],
+              (err, data) => {
+                if (err) throw err;
+                init();
+              }
+            );
+          });
+      });
     }
   );
 };
