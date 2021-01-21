@@ -205,6 +205,7 @@ const addDepartment = () => {
         [name],
         (err, data) => {
           if (err) throw err;
+          init();
         }
       );
     });
