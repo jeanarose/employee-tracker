@@ -28,7 +28,12 @@ const init = () => {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["View all employees", "View employees by department", "Exit"],
+        choices: [
+          "View all employees",
+          "View employees by department",
+          "Add an employee",
+          "Exit",
+        ],
       },
     ])
     .then((data) => {
@@ -38,6 +43,9 @@ const init = () => {
           break;
         case "View employees by department":
           viewEmployeesByDepartment();
+          break;
+        case "Add an employee":
+          addEmployee();
           break;
         case "Exit":
           exit();
@@ -65,6 +73,18 @@ const viewEmployees = () => {
 };
 
 // Add employees
+const addEmployee = () => {
+  connection.query(
+    `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES 
+        ("John", "Smith", 1, 2);`,
+    (err, data) => {
+      if (err) throw err;
+      console.table(data);
+      init();
+    }
+  );
+};
 
 // Add roles
 
