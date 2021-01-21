@@ -72,7 +72,6 @@ const viewEmployeesByDepartment = () => {
         },
       ])
       .then(({ department }) => {
-        console.log(department);
         connection.query(
           `SELECT first_name, last_name, name AS department, title, salary
           FROM employee, department, role
@@ -81,6 +80,7 @@ const viewEmployeesByDepartment = () => {
           (err, data) => {
             if (err) throw err;
             console.table(data);
+            init();
           }
         );
       });
@@ -88,6 +88,7 @@ const viewEmployeesByDepartment = () => {
 };
 
 // View employees by manager
+
 // Add employee
 // Remove employee
 // Update employee role
