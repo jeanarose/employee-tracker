@@ -40,12 +40,17 @@ CREATE TABLE department (
 -- View roles
 
 -- View employees
-SELECT first_name, last_name,title, name AS department, manager_id, salary
+SELECT 
+	CONCAT(employee.first_name, " ", employee.last_name) AS employee,
+	CONCAT(manager.first_name, " ", manager.last_name) AS manager,
+    title, name AS department, salary
 FROM employee
-INNER JOIN role
-    on employee.role_id = role.id 
+INNER JOIN employee manager ON 
+	manager.id = employee.manager_id
+INNER JOIN role ON 
+	employee.role_id = role.id
 INNER JOIN department
-    on role.department_id = department.id;
+	ON role.department_id = department.id;
 
 -- Update employee roles
 
