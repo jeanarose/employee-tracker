@@ -47,11 +47,19 @@ const init = () => {
 };
 
 const viewEmployees = () => {
-  connection.query(`SELECT * FROM employee;`, (err, data) => {
-    if (err) throw err;
-    console.table(data);
-    init();
-  });
+  connection.query(
+    `SELECT first_name, last_name,title, name AS department, manager_id, salary
+  FROM employee
+  INNER JOIN role
+      on employee.role_id = role.id 
+  INNER JOIN department
+      on role.department_id = department.id;`,
+    (err, data) => {
+      if (err) throw err;
+      console.table(data);
+      init();
+    }
+  );
 };
 
 // View all employees by department
