@@ -27,15 +27,17 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
+-- REQUIRED: 
 
-INSERT INTO department (name)
+-- Add employees
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-	("Sales"),
-    ("Engineering"),
-    ("Finance"),
-    ("Legal");
-	
+	("John", "Smith", 1, 2),
+    ("Jane", "Doe", 5, 3),
+    ("Hannah", "Johnson", 8, null),
+    ("Paul", "Nelson", 7, 3);
 
+-- Add roles
 INSERT INTO role (title, salary, department_id)
 VALUES 
 	("Software Engineer", 85000, 2),
@@ -51,10 +53,24 @@ VALUES
     ("Software Engineer", 90000, 2),
 	("Legal Team Lead", 80000, 4);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+-- Add departments
+INSERT INTO department (name)
 VALUES 
-	("John", "Smith", 1, 2),
-    ("Jane", "Doe", 5, 3),
-    ("Hannah", "Johnson", 8, null),
-    ("Paul", "Nelson", 7, 3);
+	("Human Resources"),
+    ("Marketing"),
+    ("Operations");
 
+-- Update employee roles
+UPDATE employee
+	SET role_id = 1
+    WHERE id = 1;
+
+-- BONUS:
+
+-- Update employee managers
+
+-- Delete departments
+
+-- Delete roles
+
+-- Delete employees

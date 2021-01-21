@@ -27,23 +27,25 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
+
+INSERT INTO department (name)
+VALUES 
+	("Sales"),
+    ("Engineering"),
+    ("Finance"),
+    ("Legal");
+	
+
+
+
 -- REQUIRED:
 
--- Add departments
-
--- Add roles
-
--- Add employees
-
--- View departments
-
--- View roles
-
--- View employees
+-- View employees with roles and departments
 SELECT 
 	CONCAT(employee.first_name, " ", employee.last_name) AS employee,
 	CONCAT(manager.first_name, " ", manager.last_name) AS manager,
-    title, name AS department, salary
+    title, name AS department, 
+    CONCAT("$", salary) AS salary
 FROM employee
 INNER JOIN employee manager ON 
 	manager.id = employee.manager_id
@@ -52,12 +54,7 @@ INNER JOIN role ON
 INNER JOIN department
 	ON role.department_id = department.id;
 
--- Update employee roles
-
-
 -- BONUS:
-
--- Update employee managers
 
 -- View employees by manager
 
@@ -66,16 +63,9 @@ SELECT first_name, last_name, name AS department, title, salary
 FROM employee, department, role
 WHERE employee.role_id = role.id AND role.department_id = 1 AND department.id = 1;
 
--- Delete departments
-
--- Delete roles
-
--- Delete employees
-
 -- View the total utilized budget of a department, ie the combined salaries of all employees in that department
 
-
--- VIEW TABLES 
+-- VIEW TABLES: 
 
 SELECT * FROM employee;
 
