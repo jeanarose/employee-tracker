@@ -33,9 +33,9 @@ CREATE TABLE department (
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
 	("John", "Smith", 1, 2),
-    ("Jane", "Doe", 5, 3),
-    ("Hannah", "Johnson", 8, null),
-    ("Paul", "Nelson", 7, 3);
+    ("Jane", "Doe", 2, 3),
+    ("Hannah", "Johnson", 1, 3),
+    ("Paul", "Nelson", 2, 1);
 
 -- Add roles
 INSERT INTO role (title, salary, department_id)
@@ -56,9 +56,14 @@ VALUES
 -- Add departments
 INSERT INTO department (name)
 VALUES 
-	("Human Resources"),
+	("Sales"),
+    ("Engineering"),
+    ("Finance"),
+    ("Legal"),
+    ("Human Resources"),
     ("Marketing"),
     ("Operations");
+	
 
 -- Update employee roles
 UPDATE employee
