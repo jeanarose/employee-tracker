@@ -89,7 +89,7 @@ const addEmployee = () => {
         value: employee.id,
       };
     });
-    connection.query(`SELECT title FROM role;`, (err, data) => {
+    connection.query(`SELECT * FROM role;`, (err, data) => {
       if (err) throw err;
       const arrayOfRoles = data.map((role) => {
         return { name: role.title, value: role.id };
@@ -119,7 +119,7 @@ const addEmployee = () => {
             choices: arrayOfManagers,
           },
         ])
-        .then(({ firstName, lastName, role, manager }) => {
+        .then(({ firstName, lastName, role, manager }) => {    
           connection.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`,
             [firstName, lastName, role, manager],
