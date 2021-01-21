@@ -27,7 +27,19 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
--- View all employees 
+-- REQUIRED:
+
+-- Add departments
+
+-- Add roles
+
+-- Add employees
+
+-- View departments
+
+-- View roles
+
+-- View employees
 SELECT first_name, last_name,title, name AS department, manager_id, salary
 FROM employee
 INNER JOIN role
@@ -35,17 +47,33 @@ INNER JOIN role
 INNER JOIN department
     on role.department_id = department.id;
 
+-- Update employee roles
 
+
+-- BONUS:
+
+-- Update employee managers
+
+-- View employees by manager
 
 -- View employees by department 
 SELECT first_name, last_name, name AS department, title, salary
 FROM employee, department, role
 WHERE employee.role_id = role.id AND role.department_id = 1 AND department.id = 1;
 
+-- Delete departments
+
+-- Delete roles
+
+-- Delete employees
+
+-- View the total utilized budget of a department, ie the combined salaries of all employees in that department
+
+
+-- VIEW TABLES 
+
 SELECT * FROM employee;
 
 SELECT * FROM role;
 
 SELECT * FROM department;
-
--- Display managers by name in table
