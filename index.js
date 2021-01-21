@@ -33,6 +33,7 @@ const init = () => {
           "View employees by department",
           "Add employee",
           "Add role",
+          "Add department",
           "Exit",
         ],
       },
@@ -50,6 +51,9 @@ const init = () => {
           break;
         case "Add role":
           addRole();
+          break;
+        case "Add department":
+          addDepartment();
           break;
         case "Exit":
           exit();
