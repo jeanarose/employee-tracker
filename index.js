@@ -137,6 +137,7 @@ const addEmployee = () => {
   });
 };
 
+// Add roles
 const addRole = () => {
   connection.query(`SELECT * FROM role;`, (err, data) => {
     if (err) throw err;
@@ -146,42 +147,64 @@ const addRole = () => {
     const arrayOfDepartments = data.map((department) => {
       return { name: department.name, value: department.id };
     });
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "title",
+          message: "What is the title of the role?",
+        },
+        {
+          type: "input",
+          name: "salary",
+          message: "What is the salary of the role?",
+        },
+        {
+          type: "list",
+          name: "department",
+          message: "What department is the role in?",
+          choices: arrayOfDepartments,
+        },
+      ])
+      .then(({ title, salary, department }) => {
+        connection.query(
+          `INSERT INTO role (title, salary, department_id)
+      VALUES (?, ?, ?);`,
+          [title, salary, department],
+          (err, data) => {
+            if (err) throw err;
+            init();
+          }
+        );
+      });
+  });
+};
+
+// Add departments
+const addDepartment = () => {
+  connection.query(`SELECT * FROM department;`, (err, data) => {
+    if (err) throw err;
+  });
   inquirer
     .prompt([
       {
         type: "input",
-        name: "title",
-        message: "What is the title of the role?",
-      },
-      {
-        type: "input",
-        name: "salary",
-        message: "What is the salary of the role?",
-      },
-      {
-        type: "list",
-        name: "department",
-        message: "What department is the role in?",
-        choices: arrayOfDepartments,
+        name: "name",
+        message: "What is the name of the department you'd like to add?",
       },
     ])
-    .then(({ title, salary, department }) => {
+    .then(({ name }) => {
       connection.query(
-        `INSERT INTO role (title, salary, department_id)
-      VALUES (?, ?, ?);`,
-        [title, salary, department],
+        `INSERT INTO department (name)
+    VALUES 
+      (?);`,
+        [name],
         (err, data) => {
           if (err) throw err;
-          init();
         }
       );
     });
-  });
 };
-
-// Add roles
-
-// Add departments
 
 // Update employee roles
 
