@@ -32,6 +32,7 @@ const init = () => {
           "View all employees",
           "View employees by department",
           "Add employee",
+          "Add role",
           "Exit",
         ],
       },
@@ -59,18 +60,18 @@ const init = () => {
 const viewEmployees = () => {
   connection.query(
     `SELECT 
-    employee.id,
-    CONCAT(employee.first_name, " ", employee.last_name) AS employee,
-      title, name AS department, 
-      CONCAT("$", salary) AS salary,
-      CONCAT(manager.first_name, " ", manager.last_name) AS manager
-  FROM employee
-  INNER JOIN employee manager ON 
-    manager.id = employee.manager_id
-  INNER JOIN role ON 
-    employee.role_id = role.id
-  INNER JOIN department
-    ON role.department_id = department.id;`,
+        employee.id,
+        CONCAT(employee.first_name, " ", employee.last_name) AS employee,
+        title, name AS department, 
+        CONCAT("$", salary) AS salary,
+        CONCAT(manager.first_name, " ", manager.last_name) AS manager
+    FROM employee
+    INNER JOIN employee manager ON 
+	      manager.id = employee.manager_id
+    INNER JOIN role ON 
+	    employee.role_id = role.id
+    INNER JOIN department
+	    ON role.department_id = department.id;`,
     (err, data) => {
       if (err) throw err;
       console.table(data);
@@ -119,7 +120,7 @@ const addEmployee = () => {
             choices: arrayOfManagers,
           },
         ])
-        .then(({ firstName, lastName, role, manager }) => {    
+        .then(({ firstName, lastName, role, manager }) => {
           connection.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);`,
             [firstName, lastName, role, manager],
@@ -131,6 +132,16 @@ const addEmployee = () => {
         });
     });
   });
+};
+
+const addRole = () => {
+  connection.query(`SELECT * FROM role;`, (err, data) => {
+    if (err) throw err;
+    console.log(data);
+  });
+  // connection.query(`INSERT INTO role (title, salary, department_id)
+  // VALUES
+  //   ("Software Engineer", 85000, 2);`);
 };
 
 // Add roles
