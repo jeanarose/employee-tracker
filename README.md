@@ -30,6 +30,8 @@ The following resources were used to find code to make Employee Tracker function
 * [w3schools:](https://www.w3schools.com/sql/sql_foreignkey.asp) SQL FOREIGN KEY Constraint
 * [MySQL Tutorial:](https://www.mysqltutorial.org/mysql-foreign-key/) Introduction to MySQL foreign key
 * [Site Point:](https://www.sitepoint.com/mysql-foreign-keys-quicker-database-development/) How to Use MySQL Foreign Keys for Quicker Database Development
+* [Stack Overflow:](https://stackoverflow.com/questions/10195451/sql-inner-join-with-3-tables) MySQL inner join with three tables
+* [Stack Overflow:](https://stackoverflow.com/questions/3709560/joining-three-tables-using-mysql) Joining three tables using WHERE in MySQL
 ## License
 Copyright (c) 2021 Jeana Rose Mathis
 
