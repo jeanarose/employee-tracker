@@ -40,7 +40,7 @@ INSERT INTO role (title, salary, department_id)
 VALUES 
 	("Software Engineer", 85000, 2),
     ("Engineer Manager", 130000, 2),
-    ("Sales Manager", 100000, 2),
+    ("Sales Manager", 100000, 1),
     ("Sales Lead", 55000, 1),
 	("Salesperson", 60000, 1),
 	("Lead Engineer", 160000, 2),
@@ -53,7 +53,8 @@ VALUES
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-	("John", "Doe", 1, 2),
+	("John", "Smith", 1, 2),
     ("Jane", "Doe", 5, 3),
-    ("Willy", "Wonka", 8, null);
+    ("Hannah", "Johnson", 8, null),
+    ("Paul", "Nelson", 7, 3);
 
