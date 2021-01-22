@@ -1,6 +1,7 @@
 // Dependencies
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const clear = require("clear");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -85,6 +86,7 @@ const viewEmployees = () => {
 	    ON role.department_id = department.id;`,
     (err, data) => {
       if (err) throw err;
+      clear();
       console.table(data);
       init();
     }
@@ -137,6 +139,7 @@ const addEmployee = () => {
             [firstName, lastName, role, manager],
             (err, data) => {
               if (err) throw err;
+              clear();
               init();
             }
           );
@@ -183,6 +186,7 @@ const addRole = () => {
           [title, salary, department],
           (err, data) => {
             if (err) throw err;
+            clear();
             init();
           }
         );
@@ -215,6 +219,7 @@ const addDepartment = () => {
           [name],
           (err, data) => {
             if (err) throw err;
+            clear();
             init();
           }
         );
@@ -264,6 +269,7 @@ const updateEmployee = () => {
           connection.query(updateQuery, [role, employees], (err, data) => {
             if (err) throw err;
             viewEmployees();
+            clear();
             init();
           });
         });
@@ -301,6 +307,7 @@ const viewEmployeesByDepartment = () => {
             if (data.length === 0) {
               console.log("There are no employees in this department.");
             } else {
+              clear();
               console.table(data);
             }
             init();
