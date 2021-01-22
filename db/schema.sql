@@ -29,7 +29,7 @@ CREATE TABLE department (
 
 -- REQUIRED:
 
--- View employees with roles and departments
+-- View employees 
 SELECT 
 	employee.id,
 	CONCAT(employee.first_name, " ", employee.last_name) AS employee,
@@ -43,6 +43,21 @@ INNER JOIN role ON
 	employee.role_id = role.id
 INNER JOIN department
 	ON role.department_id = department.id;
+    
+-- View roles
+SELECT 
+	role.id,
+    title, name AS department, 
+    CONCAT("$", salary) AS salary
+FROM role
+INNER JOIN department ON 
+	department.id = role.department_id;
+    
+-- View departments
+SELECT department.id, name AS department
+FROM department
+INNER JOIN role ON
+	role.department_id = department.id;
 
 -- BONUS:
 

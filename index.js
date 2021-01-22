@@ -69,6 +69,7 @@ const init = () => {
 
 // ================ REQUIRED ================
 
+// View employees
 const viewEmployees = () => {
   connection.query(
     `SELECT 
@@ -92,6 +93,10 @@ const viewEmployees = () => {
     }
   );
 };
+
+// View roles
+
+// View departments
 
 // Add employees
 const addEmployee = () => {
