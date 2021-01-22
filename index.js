@@ -2,6 +2,8 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const clear = require("clear");
+const chalk = require("chalk");
+const figlet = require("figlet");
 require("console.table");
 
 const connection = mysql.createConnection({
@@ -19,7 +21,24 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-  if (err) throw err;
+  if (err) throw error;
+  console.log(
+    chalk.yellow.bold(
+      `====================================================================================`
+    )
+  );
+  console.log(``);
+  console.log(chalk.black.bold(figlet.textSync("Employee Tracker")));
+  console.log(``);
+  console.log(
+    `                                                          Created By: Joseph DeWoody`
+  );
+  console.log(``);
+  console.log(
+    chalk.yellow.bold(
+      `====================================================================================`
+    )
+  );
   init();
 });
 
