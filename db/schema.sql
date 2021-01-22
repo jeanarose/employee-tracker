@@ -55,9 +55,7 @@ INNER JOIN department ON
     
 -- View departments
 SELECT department.id, name AS department
-FROM department
-INNER JOIN role ON
-	role.department_id = department.id;
+FROM department;
 
 -- BONUS:
 

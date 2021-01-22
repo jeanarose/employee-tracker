@@ -120,9 +120,7 @@ INNER JOIN department ON
 // View departments
 const viewDepartments = () => {
   const departmentsQuery = `SELECT department.id, name AS department
-  FROM department
-  INNER JOIN role ON
-    role.department_id = department.id;`;
+  FROM department;`;
   connection.query(departmentsQuery, (err, data) => {
     if (err) throw err;
     clear();
