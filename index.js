@@ -31,6 +31,7 @@ const init = () => {
         choices: [
           "View all employees",
           "View employees by department",
+          "View employees by manager",
           "Add employee",
           "Add role",
           "Add department",
@@ -46,6 +47,9 @@ const init = () => {
           break;
         case "View employees by department":
           viewEmployeesByDepartment();
+          break;
+        case "View employees by manager":
+          viewEmployeesByManager();
           break;
         case "Add employee":
           addEmployee();
