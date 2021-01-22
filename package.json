@@ -19,7 +19,7 @@
   "homepage": "https://github.com/jeanarose/employee-tracker#readme",
   "dependencies": {
     "clear": "^0.1.0",
-    "console": "^0.7.2",
+    "console.table": "^0.10.0",
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
   }
