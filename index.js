@@ -203,22 +203,17 @@ const addDepartment = () => {
     .then(({ name }) => {
       connection.query(departmentQuery, (err, data) => {
         if (err) throw err;
-          if (data[0].name === name) {
-            console.log("This department already exists!");
-            init();
-          } else {
-            console.log("Department successfully added!")
-            connection.query(
-              `INSERT INTO department (name)
+        console.log("Department successfully added!");
+        connection.query(
+          `INSERT INTO department (name)
           VALUES
             (?);`,
-              [name],
-              (err, data) => {
-                if (err) throw err;
-                init();
-              }
-            );
+          [name],
+          (err, data) => {
+            if (err) throw err;
+            init();
           }
+        );
       });
     });
 };
@@ -264,6 +259,7 @@ const viewEmployeesByDepartment = () => {
 };
 
 // View employees by manager
+const updateEmployee = () => {};
 
 // Add employee
 // Remove employee
