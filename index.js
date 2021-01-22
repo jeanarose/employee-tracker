@@ -2,7 +2,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const clear = require("clear");
-require('console.table');
+require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -33,6 +33,7 @@ const init = () => {
         choices: [
           "View all employees",
           "View employees by department",
+          "View employees by manager",
           "View roles",
           "View departments",
           "Add employee",
@@ -50,6 +51,9 @@ const init = () => {
           break;
         case "View employees by department":
           viewEmployeesByDepartment();
+          break;
+        case "View employees by manager":
+          viewEmployeesByManager();
           break;
         case "View roles":
           viewRoles();
@@ -364,46 +368,43 @@ const viewEmployeesByDepartment = () => {
 };
 
 // View employees by manager
-// const viewEmployeesByManager = () => {
-//   connection.query(`SELECT * FROM employee;`, (err, data) => {
-//     if (err) throw err;
-//     const arrayOfManagers = data.map((employee) => {
-//       return {
-//         name: `${employee.first_name} ${employee.last_name}`,
-//         value: employee.manager_id,
-//       };
-//     });
-//     console.log(arrayOfManagers);
-//     inquirer
-//       .prompt([
-//         {
-//           type: "list",
-//           name: "managers",
-//           message: "Which manager's employees would you like to view?",
-//           choices: arrayOfManagers,
-//         },
-//       ])
-//       .then(({ managers }) => {
-//         console.log(managers);
-//         // connection.query(
-//         //   `SELECT first_name, last_name, name AS department, title,
-//         //   CONCAT("$", salary) AS salary
-//         //   FROM employee, department, role
-//         //   WHERE ? = employee.id`,
-//         //   [managers],
-//         //   (err, data) => {
-//         //     if (err) throw err;
-//         //     if (data.length === 0) {
-//         //       console.log("This manager does not oversee any employees.");
-//         //     } else {
-//         //       console.table(data);
-//         //     }
-//         //     init();
-//         //   }
-//         // );
-//       });
-//   });
-// };
+const viewEmployeesByManager = () => {
+  connection.query(`SELECT * FROM employee;`, (err, data) => {
+    if (err) throw err;
+    const managers = data.map((employee) => {
+      return {
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.manager_id,
+      };
+    });
+    const arrayOfManagers = managers.filter((manager) => manager.value != null);
+    console.log(arrayOfManagers);
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "managers",
+          message: "Which manager's employees would you like to view?",
+          choices: arrayOfManagers,
+        },
+      ])
+      .then(({ managers }) => {
+        console.log(managers);
+        connection.query(
+          `SELECT first_name, last_name, name AS department, title,
+          CONCAT("$", salary) AS salary
+          FROM employee, department, role
+          WHERE ? = employee.id`,
+          [managers],
+          (err, data) => {
+            if (err) throw err;
+            console.table(data);
+            init();
+          }
+        );
+      });
+  });
+};
 
 // Add employee
 // Remove employee
