@@ -42,7 +42,8 @@ INNER JOIN employee manager ON
 INNER JOIN role ON 
 	employee.role_id = role.id
 INNER JOIN department
-	ON role.department_id = department.id;
+	ON role.department_id = department.id
+ORDER BY employee.id asc;
     
 -- View roles
 SELECT 
