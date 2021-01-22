@@ -1,9 +1,18 @@
 # Employee Tracker
 [![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Description
+Employee Tracker is a command line interface designed to display and update information about employees and the company. Information includes employee names, job title, salary, departments, and managers. This application is helpful for any company employee wishing to view such data. Rather than having to send and receive several emails to find the information that a user is looking for, they can instead quickly and easily view the data using Employee Tracker. 
 
+Employee Tracker utilizes several key technologies:
+* Node.js
+* MySQL
+* Inquirer
+* Console.table
+* Figlet and Chalk
+
+For a deeper understanding, watch this a video walk-through of the application: https://drive.google.com/file/d/1sX6jj31uTKs5NSSNd7G2e27dkgZMpBvN/view
 ## Employee Tracker
-![Screenshot of Employee Tracker application.](public/assets/images/employee-tracker-screenshot.png)
+![Screenshot of Employee Tracker application.](assets/employee-tracker-screenshot.png)
 
 ## Table of Contents
 * [Installation](#installation)
@@ -20,6 +29,7 @@
 5. Use the command **git clone [insert SSH key URL]** and click **Enter** (*Requires Git*).
 
 ## Usage
+Employee tracker is a tool that companies can use to view employee and company data quickly. It can also be used to add and update company data.
 
 ## Credits
 The following people contributed to the success of this application. You can view their GitHub profiles by clicking on their names:
@@ -55,7 +65,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 ## Tests
+Interested in testing Employee Tracker?
 
+Check to see that all of the `add` functions work as expected:
+- When you add an employee, the employee is added to the list of employees as the last ID. 
+- When you add a role, the role is added to the list of roles as the last ID.
+- When you add a department, the department is added to the list of departments as the last ID. If the department already exists, a message is shown letting the user know that the department already exists. 
 
 ## Questions
 If you have any questions, you can contact me at jr.mathis608@gmail.com. 
