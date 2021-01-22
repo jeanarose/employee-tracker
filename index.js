@@ -199,32 +199,40 @@ const addDepartment = () => {
   const departmentQuery = `SELECT * FROM department;`;
   connection.query(departmentQuery, (err, data) => {
     if (err) throw err;
-  });
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What is the name of the department you'd like to add?",
-      },
-    ])
-    .then(({ name }) => {
-      connection.query(departmentQuery, (err, data) => {
-        if (err) throw err;
-        console.log("Department successfully added!");
-        connection.query(
-          `INSERT INTO department (name)
+
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "name",
+          message: "What is the name of the department you'd like to add?",
+          validate: (name) => {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].name === name) {
+                return "Department already exists!";
+              } 
+            }
+            return true;
+          },
+        },
+      ])
+      .then(({ name }) => {
+        connection.query(departmentQuery, (err, data) => {
+          if (err) throw err;
+
+          connection.query(
+            `INSERT INTO department (name)
           VALUES
             (?);`,
-          [name],
-          (err, data) => {
-            if (err) throw err;
-            clear();
-            init();
-          }
-        );
+            [name],
+            (err, data) => {
+              if (err) throw err;
+              init();
+            }
+          );
+        });
       });
-    });
+  });
 };
 
 // Update employee roles
