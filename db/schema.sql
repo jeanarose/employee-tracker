@@ -61,12 +61,3 @@ SELECT first_name, last_name, name AS department, title,
 		CONCAT("$", salary) AS salary
 FROM employee, department, role
 WHERE employee.role_id = role.id AND role.department_id = 1 AND department.id = 1;
-
--- Delete departments
-
--- Delete roles
-
--- Delete employees
-
--- View the total utilized budget of a department, ie the combined salaries of all employees in that department
-

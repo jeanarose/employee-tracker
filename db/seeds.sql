@@ -73,10 +73,6 @@ UPDATE employee
 	SET role_id = 1
     WHERE id = 1;
 
--- BONUS:
-
--- Update employee managers
-
 -- Delete employee
 DELETE FROM employee WHERE CONCAT(first_name, " ", last_name) = "Paul Nelson";
 
