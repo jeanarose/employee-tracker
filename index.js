@@ -219,6 +219,40 @@ const addDepartment = () => {
 };
 
 // Update employee roles
+const updateEmployee = () => {
+  const arrayOfEmployees = data.map((employee) => {
+    return {
+      name: `${employee.first_name} ${employee.last_name}`,
+      value: employee.id,
+    };
+  });
+  const arrayOfRoles = data.map((role) => {
+    return { name: role.title, value: role.id };
+  });
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "employees",
+        message: "Which employee would you like to update?",
+        choices: arrayOfEmployees,
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "What is their new role?",
+        choices: arrayOfRoles,
+      },
+    ])
+    .then(({ employees, role }) => {
+      const updateQuery = `UPDATE employee
+    SET role_id = ?
+      WHERE id = ?;`;
+      connection.query(updateQuery, [employees, role], (err, data) => {
+        if (err) throw err;
+      });
+    });
+};
 
 // ================ BONUS ================
 
@@ -259,7 +293,6 @@ const viewEmployeesByDepartment = () => {
 };
 
 // View employees by manager
-const updateEmployee = () => {};
 
 // Add employee
 // Remove employee
