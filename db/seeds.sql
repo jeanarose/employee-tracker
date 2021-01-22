@@ -35,7 +35,10 @@ VALUES
 	("John", "Smith", 1, 2),
     ("Jane", "Doe", 2, 3),
     ("Hannah", "Johnson", 1, 3),
-    ("Paul", "Nelson", 2, 1);
+    ("Paul", "Nelson", 2, 1),
+    ("Josh", "Martin", 7, 4),
+    ("Taylor","Phillips", 10, null),
+    ("Rebecca","Bennett",12, 6);
 
 -- Add roles
 INSERT INTO role (title, salary, department_id)
