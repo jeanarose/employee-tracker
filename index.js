@@ -2,6 +2,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const clear = require("clear");
+const console = require('console').default
 
 const connection = mysql.createConnection({
   host: "localhost",
