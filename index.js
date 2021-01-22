@@ -34,6 +34,7 @@ const init = () => {
           "Add employee",
           "Add role",
           "Add department",
+          "Update employee",
           "Exit",
         ],
       },
@@ -54,6 +55,9 @@ const init = () => {
           break;
         case "Add department":
           addDepartment();
+          break;
+        case "Update employee":
+          updateEmployee();
           break;
         case "Exit":
           exit();
@@ -220,38 +224,50 @@ const addDepartment = () => {
 
 // Update employee roles
 const updateEmployee = () => {
-  const arrayOfEmployees = data.map((employee) => {
-    return {
-      name: `${employee.first_name} ${employee.last_name}`,
-      value: employee.id,
-    };
-  });
-  const arrayOfRoles = data.map((role) => {
-    return { name: role.title, value: role.id };
-  });
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "employees",
-        message: "Which employee would you like to update?",
-        choices: arrayOfEmployees,
-      },
-      {
-        type: "list",
-        name: "role",
-        message: "What is their new role?",
-        choices: arrayOfRoles,
-      },
-    ])
-    .then(({ employees, role }) => {
-      const updateQuery = `UPDATE employee
+  const employeeQuery = `SELECT * FROM employee;`;
+  const roleQuery = `SELECT * FROM role;`;
+  connection.query(employeeQuery, (err, data) => {
+    if (err) throw err;
+    const arrayOfEmployees = data.map((employee) => {
+      return {
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
+      };
+    });
+    connection.query(roleQuery, (err, data) => {
+      if (err) throw err;
+      const arrayOfRoles = data.map((role) => {
+        return {
+          name: role.title,
+          value: role.id,
+        };
+      });
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "employees",
+            message: "Which employee would you like to update?",
+            choices: arrayOfEmployees,
+          },
+          {
+            type: "list",
+            name: "role",
+            message: "What is their new role?",
+            choices: arrayOfRoles,
+          },
+        ])
+        .then(({employees, role}) => {
+          const updateQuery = `UPDATE employee
     SET role_id = ?
       WHERE id = ?;`;
-      connection.query(updateQuery, [employees, role], (err, data) => {
-        if (err) throw err;
-      });
+          connection.query(updateQuery, [role, employees], (err, data) => {
+            if (err) throw err;
+            init();
+          });
+        });
     });
+  });
 };
 
 // ================ BONUS ================
