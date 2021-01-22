@@ -33,7 +33,6 @@ const init = () => {
         choices: [
           "View all employees",
           "View employees by department",
-          "View employees by manager",
           "View roles",
           "View departments",
           "Add employee",
@@ -51,9 +50,6 @@ const init = () => {
           break;
         case "View employees by department":
           viewEmployeesByDepartment();
-          break;
-        case "View employees by manager":
-          viewEmployeesByManager();
           break;
         case "View roles":
           viewRoles();
@@ -80,8 +76,6 @@ const init = () => {
     });
 };
 
-// ================ REQUIRED ================
-
 // View employees
 const viewEmployees = () => {
   const employeesQuery = `SELECT 
@@ -103,6 +97,44 @@ ORDER BY employee.id asc;`;
     clear();
     console.table(data);
     init();
+  });
+};
+
+// View all employees by department
+const viewEmployeesByDepartment = () => {
+  connection.query(`SELECT * FROM department;`, (err, data) => {
+    if (err) throw err;
+    const arrayOfDepartments = data.map((department) => {
+      return { name: department.name, value: department.id };
+    });
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "department",
+          message: "Which department would you like to view?",
+          choices: arrayOfDepartments,
+        },
+      ])
+      .then(({ department }) => {
+        connection.query(
+          `SELECT employee.id, first_name, last_name, name AS department, title, 
+          CONCAT("$", salary) AS salary
+          FROM employee, department, role
+          WHERE employee.role_id = role.id AND role.department_id = ? AND department.id = ?;`,
+          [department, department],
+          (err, data) => {
+            if (err) throw err;
+            if (data.length === 0) {
+              console.log("There are no employees in this department.");
+            } else {
+              clear();
+              console.table(data);
+            }
+            init();
+          }
+        );
+      });
   });
 };
 
@@ -269,6 +301,7 @@ const addDepartment = () => {
             [name],
             (err, data) => {
               if (err) throw err;
+              viewEmployeesByDepartment();
               init();
             }
           );
@@ -327,90 +360,10 @@ const updateEmployee = () => {
   });
 };
 
-// ================ BONUS ================
-
-// View all employees by department
-const viewEmployeesByDepartment = () => {
-  connection.query(`SELECT * FROM department;`, (err, data) => {
-    if (err) throw err;
-    const arrayOfDepartments = data.map((department) => {
-      return { name: department.name, value: department.id };
-    });
-    inquirer
-      .prompt([
-        {
-          type: "list",
-          name: "department",
-          message: "Which department would you like to view?",
-          choices: arrayOfDepartments,
-        },
-      ])
-      .then(({ department }) => {
-        connection.query(
-          `SELECT first_name, last_name, name AS department, title, 
-          CONCAT("$", salary) AS salary
-          FROM employee, department, role
-          WHERE employee.role_id = role.id AND role.department_id = ? AND department.id = ?;`,
-          [department, department],
-          (err, data) => {
-            if (err) throw err;
-            if (data.length === 0) {
-              console.log("There are no employees in this department.");
-            } else {
-              clear();
-              console.table(data);
-            }
-            init();
-          }
-        );
-      });
-  });
-};
-
-// View employees by manager
-const viewEmployeesByManager = () => {
-  connection.query(`SELECT * FROM employee;`, (err, data) => {
-    if (err) throw err;
-    const managers = data.map((employee) => {
-      return {
-        name: `${employee.first_name} ${employee.last_name}`,
-        value: employee.manager_id,
-      };
-    });
-    const arrayOfManagers = managers.filter((manager) => manager.value != null);
-    console.log(arrayOfManagers);
-    inquirer
-      .prompt([
-        {
-          type: "list",
-          name: "managers",
-          message: "Which manager's employees would you like to view?",
-          choices: arrayOfManagers,
-        },
-      ])
-      .then(({ managers }) => {
-        console.log(managers);
-        connection.query(
-          `SELECT first_name, last_name, name AS department, title,
-          CONCAT("$", salary) AS salary
-          FROM employee, department, role
-          WHERE ? = employee.id`,
-          [managers],
-          (err, data) => {
-            if (err) throw err;
-            console.table(data);
-            init();
-          }
-        );
-      });
-  });
-};
-
-// Add employee
-// Remove employee
-// Update employee role
-// Update employee manager
-// View all roles
+// Delete employee
+const deleteEmployee = () => {
+  connection.query()
+}
 
 const exit = () => {
   connection.end();

@@ -77,8 +77,11 @@ UPDATE employee
 
 -- Update employee managers
 
--- Delete departments
+-- Delete employee
+DELETE FROM employee WHERE CONCAT(first_name, " ", last_name) = "Paul Nelson";
 
--- Delete roles
+-- Delete role
+DELETE FROM role WHERE title = "Salesperson";
 
--- Delete employees
+-- Delete department
+DELETE FROM department WHERE name = "General Management";

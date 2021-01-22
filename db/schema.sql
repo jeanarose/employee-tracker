@@ -27,8 +27,6 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
--- REQUIRED:
-
 -- View employees 
 SELECT 
 	employee.id,
@@ -58,12 +56,6 @@ LEFT JOIN department ON
 SELECT department.id, name AS department
 FROM department;
 
--- BONUS:
-
--- Update employee managers
-
--- View employees by manager
-
 -- View employees by department 
 SELECT first_name, last_name, name AS department, title, 
 		CONCAT("$", salary) AS salary
@@ -78,11 +70,3 @@ WHERE employee.role_id = role.id AND role.department_id = 1 AND department.id = 
 
 -- View the total utilized budget of a department, ie the combined salaries of all employees in that department
 
-
--- VIEW TABLES 
-
-SELECT * FROM employee;
-
-SELECT * FROM role;
-
-SELECT * FROM department;
