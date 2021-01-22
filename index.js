@@ -290,7 +290,8 @@ const viewEmployeesByDepartment = () => {
       ])
       .then(({ department }) => {
         connection.query(
-          `SELECT first_name, last_name, name AS department, title, salary
+          `SELECT first_name, last_name, name AS department, title, 
+          CONCAT("$", salary) AS salary
           FROM employee, department, role
           WHERE employee.role_id = role.id AND role.department_id = ? AND department.id = ?;`,
           [department, department],
