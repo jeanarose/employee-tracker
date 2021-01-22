@@ -232,8 +232,6 @@ const addEmployee = () => {
             [firstName, lastName, role, manager],
             (err, data) => {
               if (err) throw err;
-              clear();
-              viewEmployees();
               init();
             }
           );
@@ -281,7 +279,6 @@ const addRole = () => {
           (err, data) => {
             if (err) throw err;
             clear();
-            viewRoles();
             init();
           }
         );
@@ -322,7 +319,6 @@ const addDepartment = () => {
             [name],
             (err, data) => {
               if (err) throw err;
-              viewDepartments();
               init();
             }
           );
