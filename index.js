@@ -143,10 +143,12 @@ const addEmployee = () => {
 
 // Add roles
 const addRole = () => {
-  connection.query(`SELECT * FROM role;`, (err, data) => {
+  const roleQuery = `SELECT * FROM role;`;
+  const departmentQuery = `SELECT * FROM department;`;
+  connection.query(roleQuery, (err, data) => {
     if (err) throw err;
   });
-  connection.query(`SELECT * FROM department;`, (err, data) => {
+  connection.query(departmentQuery, (err, data) => {
     if (err) throw err;
     const arrayOfDepartments = data.map((department) => {
       return { name: department.name, value: department.id };
@@ -186,7 +188,8 @@ const addRole = () => {
 
 // Add departments
 const addDepartment = () => {
-  connection.query(`SELECT * FROM department;`, (err, data) => {
+  const departmentQuery = `SELECT * FROM department;`;
+  connection.query(departmentQuery, (err, data) => {
     if (err) throw err;
   });
   inquirer
@@ -198,16 +201,25 @@ const addDepartment = () => {
       },
     ])
     .then(({ name }) => {
-      connection.query(
-        `INSERT INTO department (name)
-    VALUES 
-      (?);`,
-        [name],
-        (err, data) => {
-          if (err) throw err;
-          init();
-        }
-      );
+      connection.query(departmentQuery, (err, data) => {
+        if (err) throw err;
+          if (data[0].name === name) {
+            console.log("This department already exists!");
+            init();
+          } else {
+            console.log("Department successfully added!")
+            connection.query(
+              `INSERT INTO department (name)
+          VALUES
+            (?);`,
+              [name],
+              (err, data) => {
+                if (err) throw err;
+                init();
+              }
+            );
+          }
+      });
     });
 };
 
