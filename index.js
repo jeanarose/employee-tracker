@@ -33,6 +33,7 @@ const init = () => {
           "View all employees",
           "View employees by department",
           "View roles",
+          "View departments",
           "Add employee",
           "Add role",
           "Add department",
@@ -51,6 +52,9 @@ const init = () => {
           break;
         case "View roles":
           viewRoles();
+          break;
+        case "View departments":
+          viewDepartments();
           break;
         case "Add employee":
           addEmployee();
@@ -114,6 +118,18 @@ INNER JOIN department ON
 };
 
 // View departments
+const viewDepartments = () => {
+  const departmentsQuery = `SELECT department.id, name AS department
+  FROM department
+  INNER JOIN role ON
+    role.department_id = department.id;`;
+  connection.query(departmentsQuery, (err, data) => {
+    if (err) throw err;
+    clear();
+    console.table(data);
+    init();
+  });
+};
 
 // Add employees
 const addEmployee = () => {
