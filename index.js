@@ -2,8 +2,8 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const clear = require("clear");
-const console = require('console').default;
-const console = console.default;
+// const console = require('console').default;
+// const console = console.default;
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -109,7 +109,7 @@ const viewRoles = () => {
     title, name AS department, 
     CONCAT("$", salary) AS salary
 FROM role
-INNER JOIN department ON 
+LEFT JOIN department ON 
 	department.id = role.department_id;`;
   connection.query(rolesQuery, (err, data) => {
     if (err) throw err;

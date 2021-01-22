@@ -50,7 +50,7 @@ SELECT
     title, name AS department, 
     CONCAT("$", salary) AS salary
 FROM role
-INNER JOIN department ON 
+LEFT JOIN department ON 
 	department.id = role.department_id;
     
 -- View departments
