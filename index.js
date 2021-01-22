@@ -352,43 +352,12 @@ const updateEmployee = () => {
           connection.query(updateQuery, [role, employees], (err, data) => {
             if (err) throw err;
             viewEmployees();
-            clear();
             init();
           });
         });
     });
   });
 };
-
-
-
-// Delete employee
-const deleteEmployee = () => {
-  const queryEmployee = `SELECT * FROM employee;`
-  connection.query(queryEmployee, (err, data)=> {
-    if(err) throw err;
-    const arrayOfEmployees = data.map((employee) => {
-      return {
-        name: `${employee.first_name} ${employee.last_name}`,
-        value: employee.id,
-      };
-    });
-    inquirer.prompt([
-      {
-        type: "list",
-        name: "employee",
-        message: "Which employee would you like to delete?",
-        choices: arrayOfEmployees,
-      }
-    ]).then(({employee})=>{
-      connection.query(`DELETE FROM employee WHERE CONCAT(first_name, " ", last_name) = ?;`, [employee],(err, data)=>{
-        if(err) throw err;
-        console.log(`${employee} has been deleted!`);
-        init();
-      })
-    })
-  });
-}
 
 const exit = () => {
   connection.end();

@@ -37,7 +37,7 @@ VALUES
     ("Hannah", "Johnson", 1, 3),
     ("Paul", "Nelson", 2, 1),
     ("Josh", "Martin", 7, 4),
-    ("Taylor","Phillips", 10, null),
+    ("Taylor","Phillips", 10, 5),
     ("Rebecca","Bennett",12, 6);
 
 -- Add roles
@@ -72,12 +72,3 @@ VALUES
 UPDATE employee
 	SET role_id = 1
     WHERE id = 1;
-
--- Delete employee
-DELETE FROM employee WHERE CONCAT(first_name, " ", last_name) = "Paul Nelson";
-
--- Delete role
-DELETE FROM role WHERE title = "Salesperson";
-
--- Delete department
-DELETE FROM department WHERE name = "General Management";
